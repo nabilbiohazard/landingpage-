@@ -34,10 +34,11 @@ body { margin: 0; }
 .dialog-close { position: absolute; top: 12px; right: 16px; border: 0; background: transparent; color: #f0dfd2; font: 30px/1 Georgia,serif; cursor: pointer; }
 .seat-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .seat-form label { display: flex; flex-direction: column; gap: 7px; min-width: 0; color: #eaccc1; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
-.seat-form label:nth-child(1), .seat-form label:nth-child(2), .seat-form label:nth-child(5) { grid-column: 1 / -1; }
+.seat-form label:nth-child(1), .seat-form label:nth-child(2), .seat-form label:nth-child(4) { grid-column: 1 / -1; }
 .seat-form label span { color: #c1948d; font-weight: 400; text-transform: none; }
 .seat-form input, .seat-form select, .seat-form textarea { width: 100%; min-height: 42px; padding: 10px 12px; border: 1px solid #ab716c; border-radius: 2px; outline: none; background: #f3e8dc; color: #37070a; font: 14px 'DM Sans',Arial,sans-serif; letter-spacing: 0; }
 .seat-form textarea { resize: vertical; }
+.seat-form input::placeholder { color: #9f9188; opacity: 1; }
 .seat-form input:focus, .seat-form select:focus, .seat-form textarea:focus { border-color: #fff; box-shadow: 0 0 0 2px #fff8; }
 .seat-form .form-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .form-error { grid-column: 1 / -1; margin: 0; color: #ffe0cb; font-size: 13px; line-height: 1.4; }

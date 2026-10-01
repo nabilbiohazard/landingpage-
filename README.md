@@ -15,7 +15,7 @@ Open http://localhost:3000.
 
 The form sends requests to the server route at `/api/seat-requests`. The server appends a row to a Google Sheet. Google credentials must stay on the server; never add them to `NEXT_PUBLIC_` variables or commit them.
 
-1. Create or choose a Google Sheet. Add a tab named `Seat Requests` with these headers in row 1: `Submitted at`, `Name`, `Email`, `Phone`, `Seats`, `Note`.
+1. Create or choose a Google Sheet. Add a tab named `Seat Requests` with these headers in row 1: `Submitted at`, `Name`, `Phone`, `Seats`, `Note`.
 2. In a Google Cloud project, enable the Google Sheets API and create a service account with a JSON key.
 3. Share the Sheet with the service account email as an Editor.
 4. For local development, set the JSON key file path and Sheet ID in `.env.local`:
@@ -35,6 +35,6 @@ GOOGLE_SERVICE_ACCOUNT_EMAIL=your-service-account@your-project.iam.gserviceaccou
 GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
 ```
 
-The form saves the submission time, name, email, phone, seat count, and optional note. It only shows a success message after Google Sheets confirms the append. If the variables are missing or Sheets rejects the write, the form shows an error and keeps the visitor's details so they can retry.
+The form saves the submission time, name, phone, seat count, and optional note. It only shows a success message after Google Sheets confirms the append. If the variables are missing or Sheets rejects the write, the form shows an error and keeps the visitor's details so they can retry.
 
 Run `npm run build` and `npm run lint` before deployment.

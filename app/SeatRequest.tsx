@@ -22,7 +22,6 @@ export default function SeatRequest() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: fields.get("name"),
-          email: fields.get("email"),
           phone: fields.get("phone"),
           guests: Number(fields.get("guests")),
           note: fields.get("note"),
@@ -64,8 +63,7 @@ export default function SeatRequest() {
             <p className="dialog-intro">Leave your details and we&apos;ll be in touch about the evening.</p>
             <form className="seat-form" onSubmit={submitRequest}>
               <label>Full name<input name="name" type="text" autoComplete="name" maxLength={100} required /></label>
-              <label>Email<input name="email" type="email" autoComplete="email" maxLength={254} required /></label>
-              <label>Phone number<input name="phone" type="tel" autoComplete="tel" maxLength={40} required /></label>
+              <label>Phone number<input name="phone" type="tel" autoComplete="tel" inputMode="numeric" pattern="09[0-9]{9}" title="Enter an 11-digit mobile number starting with 09" placeholder="09123456789" maxLength={11} required /></label>
               <label>Seats requested<select name="guests" defaultValue="1">{Array.from({ length: 8 }, (_, i) => <option key={i + 1} value={i + 1}>{i + 1}</option>)}</select></label>
               <label>Note <span>(optional)</span><textarea name="note" rows={3} maxLength={1000} /></label>
               <input className="form-honeypot" name="website" type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" />

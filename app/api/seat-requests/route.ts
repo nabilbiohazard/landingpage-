@@ -4,7 +4,6 @@ export const runtime = "nodejs";
 
 type SeatRequest = {
   name?: unknown;
-  email?: unknown;
   phone?: unknown;
   guests?: unknown;
   note?: unknown;
@@ -31,15 +30,13 @@ export async function POST(request: Request) {
   if (body.website) return Response.json({ ok: true });
 
   const name = typeof body.name === "string" ? body.name.trim() : "";
-  const email = typeof body.email === "string" ? body.email.trim() : "";
   const phone = typeof body.phone === "string" ? body.phone.trim() : "";
   const note = typeof body.note === "string" ? body.note.trim() : "";
   const guests = body.guests;
 
   if (
     !name || name.length > 100 ||
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254 ||
-    !phone || phone.length > 40 ||
+    !/^09\d{9}$/.test(phone) ||
     !Number.isInteger(guests) || Number(guests) < 1 || Number(guests) > 8 ||
     note.length > 1000
   ) {
@@ -66,10 +63,10 @@ export async function POST(request: Request) {
     const sheets = google.sheets({ version: "v4", auth });
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: `'${tab.replaceAll("'", "''")}'!A:F`,
+      range: `'${tab.replaceAll("'", "''")}'!A:E`,
       valueInputOption: "RAW",
       insertDataOption: "INSERT_ROWS",
-      requestBody: { values: [[new Date().toISOString(), name, email, phone, guests, note]] },
+      requestBody: { values: [[new Date().toISOString(), name, phone, guests, note]] },
     });
     return Response.json({ ok: true });
   } catch (error) {
