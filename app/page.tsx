@@ -1,6 +1,7 @@
 import PhotoSlideshow from "./PhotoSlideshow";
 import BackgroundMusic from "./BackgroundMusic";
 import Image from "next/image";
+import SeatRequest from "./SeatRequest";
 
 const galleryPhotos = [
   { src: "/next-section/first.jpg", alt: "ROŪ dinner in Tehran mood board", label: "THE EVENING" },
@@ -29,7 +30,7 @@ export default function Home() {
                 <p className="dinner-time">8 PM — LATE</p>
               </div>
               <div className="dinner-action">
-                <p className="seat-request"><span>REQUEST A SEAT</span><span className="seat-arrow" aria-hidden="true">↗</span></p>
+                <SeatRequest />
                 <p className="dinner-signature">A gathering by Roosta Zendegi</p>
               </div>
             </article>
