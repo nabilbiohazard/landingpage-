@@ -15,7 +15,7 @@ Open http://localhost:3000.
 
 The form sends requests to the server route at `/api/seat-requests`. The server appends a row to a Google Sheet. Google credentials must stay on the server; never add them to `NEXT_PUBLIC_` variables or commit them.
 
-1. Create or choose a Google Sheet. Add a tab named `Seat Requests` with these headers in row 1: `Submitted at`, `Name`, `Phone`, `Seats`, `Note`.
+1. Create or choose a Google Sheet. Add these headers to row 1 of its `Event Registrations` tab: `Submitted at`, `Name`, `Phone`, `Seats`, `Note`.
 2. In a Google Cloud project, enable the Google Sheets API and create a service account with a JSON key.
 3. Share the Sheet with the service account email as an Editor.
 4. For local development, set the JSON key file path and Sheet ID in `.env.local`:
@@ -23,14 +23,14 @@ The form sends requests to the server route at `/api/seat-requests`. The server 
 ```text
 GOOGLE_APPLICATION_CREDENTIALS=C:/path/to/your-service-account.json
 GOOGLE_SHEET_ID=the_id_between_d_and_edit_in_the_sheet_url
-GOOGLE_SHEET_TAB=Seat Requests
+GOOGLE_SHEET_TAB=Event Registrations
 ```
 
 For deployment, add these variables to your hosting provider's server environment instead of relying on a file from your computer:
 
 ```text
 GOOGLE_SHEET_ID=the_id_between_d_and_edit_in_the_sheet_url
-GOOGLE_SHEET_TAB=Seat Requests
+GOOGLE_SHEET_TAB=Event Registrations
 GOOGLE_SERVICE_ACCOUNT_EMAIL=your-service-account@your-project.iam.gserviceaccount.com
 GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
 ```

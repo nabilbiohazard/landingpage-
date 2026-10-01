@@ -47,7 +47,7 @@ export async function POST(request: Request) {
   const keyFile = process.env.GOOGLE_APPLICATION_CREDENTIALS;
   const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
   const privateKey = process.env.GOOGLE_PRIVATE_KEY;
-  const tab = process.env.GOOGLE_SHEET_TAB || "Seat Requests";
+  const tab = process.env.GOOGLE_SHEET_TAB || "Event Registrations";
 
   if (!spreadsheetId || (!keyFile && (!clientEmail || !privateKey))) {
     return Response.json({ error: "Seat requests are not available yet. Please try again later." }, { status: 503 });
