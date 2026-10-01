@@ -23,18 +23,18 @@ The form sends requests to the server route at `/api/seat-requests`. The server 
 ```text
 GOOGLE_APPLICATION_CREDENTIALS=C:/path/to/your-service-account.json
 GOOGLE_SHEET_ID=the_id_between_d_and_edit_in_the_sheet_url
-GOOGLE_SHEET_TAB=Event Registrations
+GOOGLE_SHEET_GID=0
 ```
 
 For deployment, add these variables to your hosting provider's server environment instead of relying on a file from your computer:
 
 ```text
 GOOGLE_SHEET_ID=the_id_between_d_and_edit_in_the_sheet_url
-GOOGLE_SHEET_TAB=Event Registrations
+GOOGLE_SHEET_GID=0
 GOOGLE_SERVICE_ACCOUNT_EMAIL=your-service-account@your-project.iam.gserviceaccount.com
 GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
 ```
 
-The form saves the submission time, name, phone, seat count, and optional note. It only shows a success message after Google Sheets confirms the append. If the variables are missing or Sheets rejects the write, the form shows an error and keeps the visitor's details so they can retry.
+`GOOGLE_SHEET_GID` is the numeric `gid` of the destination tab in the Sheet URL. The form saves the submission time, name, phone, seat count, and optional note. It only shows a success message after Google Sheets confirms the append. If the variables are missing or Sheets rejects the write, the form shows an error and keeps the visitor's details so they can retry.
 
 Run `npm run build` and `npm run lint` before deployment.

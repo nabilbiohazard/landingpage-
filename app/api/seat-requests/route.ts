@@ -47,9 +47,9 @@ export async function POST(request: Request) {
   const keyFile = process.env.GOOGLE_APPLICATION_CREDENTIALS;
   const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
   const privateKey = process.env.GOOGLE_PRIVATE_KEY;
-  const tab = process.env.GOOGLE_SHEET_TAB || "Event Registrations";
+  const sheetId = Number(process.env.GOOGLE_SHEET_GID);
 
-  if (!spreadsheetId || (!keyFile && (!clientEmail || !privateKey))) {
+  if (!spreadsheetId || !Number.isInteger(sheetId) || (!keyFile && (!clientEmail || !privateKey))) {
     return Response.json({ error: "Seat requests are not available yet. Please try again later." }, { status: 503 });
   }
 
@@ -61,12 +61,23 @@ export async function POST(request: Request) {
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
     const sheets = google.sheets({ version: "v4", auth });
-    await sheets.spreadsheets.values.append({
+    await sheets.spreadsheets.batchUpdate({
       spreadsheetId,
-      range: `'${tab.replaceAll("'", "''")}'!A:E`,
-      valueInputOption: "RAW",
-      insertDataOption: "INSERT_ROWS",
-      requestBody: { values: [[new Date().toISOString(), name, phone, guests, note]] },
+      requestBody: {
+        requests: [{
+          appendCells: {
+            sheetId,
+            rows: [{ values: [
+              { userEnteredValue: { stringValue: new Date().toISOString() } },
+              { userEnteredValue: { stringValue: name } },
+              { userEnteredValue: { stringValue: phone } },
+              { userEnteredValue: { numberValue: Number(guests) } },
+              { userEnteredValue: { stringValue: note } },
+            ] }],
+            fields: "userEnteredValue",
+          },
+        }],
+      },
     });
     return Response.json({ ok: true });
   } catch (error) {
