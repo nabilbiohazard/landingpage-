@@ -47,17 +47,20 @@ export async function POST(request: Request) {
   }
 
   const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+  const keyFile = process.env.GOOGLE_APPLICATION_CREDENTIALS;
   const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
   const privateKey = process.env.GOOGLE_PRIVATE_KEY;
   const tab = process.env.GOOGLE_SHEET_TAB || "Seat Requests";
 
-  if (!spreadsheetId || !clientEmail || !privateKey) {
+  if (!spreadsheetId || (!keyFile && (!clientEmail || !privateKey))) {
     return Response.json({ error: "Seat requests are not available yet. Please try again later." }, { status: 503 });
   }
 
   try {
     const auth = new google.auth.GoogleAuth({
-      credentials: { client_email: clientEmail, private_key: privateKey.replace(/\\n/g, "\n") },
+      ...(keyFile
+        ? { keyFile }
+        : { credentials: { client_email: clientEmail, private_key: privateKey?.replace(/\\n/g, "\n") } }),
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
     const sheets = google.sheets({ version: "v4", auth });
@@ -70,7 +73,7 @@ export async function POST(request: Request) {
     });
     return Response.json({ ok: true });
   } catch (error) {
-    console.error("Seat request could not be saved to Google Sheets:", error);
+    console.error("Seat request could not be saved to Google Sheets:", error instanceof Error ? error.message : "Unknown error");
     return Response.json({ error: "Your request could not be saved. Please try again later." }, { status: 502 });
   }
 }
